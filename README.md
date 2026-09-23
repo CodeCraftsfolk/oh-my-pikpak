@@ -1,6 +1,6 @@
-# video-search
+# search-videos-save-to-pikpak
 
-[![skills.sh](https://skills.sh/b/codecraftsfolk/video-search-skill)](https://skills.sh/codecraftsfolk/video-search-skill)
+[![skills.sh](https://skills.sh/b/CodeCraftsfolk/search-videos-save-to-pikpak)](https://skills.sh/CodeCraftsfolk/search-videos-save-to-pikpak)
 
 Version: `0.1.0` (first tagged release).
 
@@ -9,7 +9,7 @@ An agent skill that searches public BT magnet indexes for films and shows — mo
 ## Install
 
 ```bash
-npx skills add codecraftsfolk/video-search-skill
+npx skills add CodeCraftsfolk/search-videos-save-to-pikpak
 ```
 
 Works with Claude Code, Codex, Cursor, OpenCode, and every other agent the [`skills` CLI](https://github.com/vercel-labs/skills) supports.

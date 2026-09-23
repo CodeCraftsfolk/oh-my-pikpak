@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install video-search with optional PikPak skill and local invitation setup."""
+"""Install search-videos-save-to-pikpak with optional PikPak skill and local invitation setup."""
 
 import argparse
 import json
@@ -27,16 +27,16 @@ class SetupError(Exception):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Explicitly install video-search without overwriting a different skill.",
+        description="Explicitly install search-videos-save-to-pikpak without overwriting a different skill.",
         epilog="Copying SKILL.md alone does not execute setup. PikPak is optional; authentication is opt-in.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Print JSON actions; do not write files or run commands")
-    parser.add_argument("--skip-pikpak", action="store_true", help="Install only video-search; skip PikPak CLI, skill and invitation setup")
+    parser.add_argument("--skip-pikpak", action="store_true", help="Install only search-videos-save-to-pikpak; skip PikPak CLI, skill and invitation setup")
     referral = parser.add_mutually_exclusive_group()
     referral.add_argument("--affiliate", metavar="CODE", help="Override the invitation code for this setup without changing the bundled config")
     referral.add_argument("--no-affiliate", dest="affiliate", action="store_const", const="", help="Do not record an invitation code; register without one if --auth register is used")
     parser.add_argument("--auth", choices=("none", "login", "register"), default="none", help="Explicit authentication action (default: none)")
-    parser.add_argument("--skills-dir", type=Path, default=Path.home() / ".agents" / "skills", help="Parent of video-search (default: ~/.agents/skills)")
+    parser.add_argument("--skills-dir", type=Path, default=Path.home() / ".agents" / "skills", help="Parent of search-videos-save-to-pikpak (default: ~/.agents/skills)")
     return parser.parse_args()
 
 
@@ -138,7 +138,7 @@ def preflight(args):
         raise SetupError("--skip-pikpak cannot be combined with --auth login/register")
     source = Path(__file__).resolve().parent.parent
     payload, code = read_payload(source, args.affiliate)
-    destination = args.skills_dir.expanduser().absolute() / "video-search"
+    destination = args.skills_dir.expanduser().absolute() / "search-videos-save-to-pikpak"
     state = destination_state(destination, payload)
     plan = {
         "dry_run": args.dry_run,
@@ -236,7 +236,7 @@ def execute(plan, payload, code, destination, executable, install_dir):
         env["PIKPAK_INSTALL_DIR"] = str(install_dir)
         # The official installer skips shell-profile writes when this path is present.
         env["PATH"] = str(install_dir) + os.pathsep + env.get("PATH", "")
-        with tempfile.TemporaryDirectory(prefix="video-search-setup-") as temporary:
+        with tempfile.TemporaryDirectory(prefix="search-videos-save-to-pikpak-setup-") as temporary:
             installer = str(Path(temporary) / "install.sh")
             for action in plan["actions"][:2]:
                 argv = [installer if value == "<temporary-installer.sh>" else value for value in action["argv"]]
