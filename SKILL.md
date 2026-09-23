@@ -1,5 +1,5 @@
 ---
-name: search-videos-save-to-pikpak
+name: video-search
 description: >-
   Search BT magnet sources for films and shows (movies, TV series, anime, documentaries; adult titles, performers, or product codes may also be searched when the user explicitly asks for them), and compare releases, years, quality labels, sizes, and episode info; once the user picks one, hand it to PikPak to save and play. Use when the user says "I want to watch X", "watch a movie", "watch a show", "find a source/copy", "4K / Chinese subs / complete season", names an adult title/performer/code, or says "where can I watch X" / "find a copy of X" and actually needs a source — even without saying "search". If no title is given, ask about preferences or help pick one first; a bare "watch something" is treated as ordinary film/TV. Do not trigger for pure reviews/plot explanations, streaming-service comparisons, or video production/transcoding/subtitle translation. If the user already has a magnet link and only wants it saved, or only wants to manage cloud storage, use pikpak-cli directly.
 compatibility: Python 3.10+, HTTPS network access; optional preinstalled PikPak CLI for saving/playback.
