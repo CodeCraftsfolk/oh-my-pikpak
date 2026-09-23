@@ -2,6 +2,8 @@
 
 [![skills.sh](https://skills.sh/b/codecraftsfolk/video-search-skill)](https://skills.sh/codecraftsfolk/video-search-skill)
 
+Version: `0.1.0` (first tagged release).
+
 An agent skill that searches public BT magnet indexes for films and shows — movies, TV series, anime, documentaries — compares releases (year, stated resolution, size, file list, subtitle/audio labels), and hands the chosen magnet to [PikPak](https://mypikpak.com) for cloud saving and playback.
 
 ## Install
@@ -17,7 +19,7 @@ Works with Claude Code, Codex, Cursor, OpenCode, and every other agent the [`ski
 - Extracts title, year, season/episode, and quality requirements from a natural-language request, then queries a public index (`scripts/btsearch.py`).
 - Ranks and filters candidates by type, quality, year, and size; returns full magnet links plus partial file listings.
 - Presents 2–3 distinct candidates with an explicit recommendation, and labels every quality claim as *stated*, not verified.
-- Optionally installs the PikPak CLI and the companion `pikpak-cli` skill (`scripts/setup.py`) so a picked release can be saved and played.
+- With the user's consent, optionally installs the PikPak CLI and companion `pikpak-cli` skill (`scripts/setup.py`) so a picked release can be saved and played; searching needs neither.
 
 ## Requirements
 
@@ -27,13 +29,13 @@ Works with Claude Code, Codex, Cursor, OpenCode, and every other agent the [`ski
 ## Companion install
 
 ```bash
-python3 scripts/setup.py --dry-run     # preview; writes nothing
-python3 scripts/setup.py               # search skill + PikPak CLI + pikpak-cli skill
-python3 scripts/setup.py --skip-pikpak # search only
-python3 scripts/setup.py --no-affiliate
+python3 scripts/setup.py --dry-run      # preview; writes nothing
+python3 scripts/setup.py                # after disclosed consent: both skills + PikPak CLI, save author's code if none exists
+python3 scripts/setup.py --skip-pikpak  # search only
+python3 scripts/setup.py --no-affiliate # companion install without writing a new referral code
 ```
 
-`config.json` carries the author's PikPak referral code (`342642`). It is only recorded locally and sent when *you* later run `pikpak auth register`; an existing referral code is never overwritten, and `--no-affiliate` skips it entirely. No account API is called at install time, and no reward is guaranteed.
+`config.json` carries the author's PikPak referral code (`342642`). The agent should recommend the companion install once, disclose that code, and let the user decline the install or request a no-code install. Setup records a code locally only when there is no existing code; installation neither registers an account nor sends the code to PikPak. An existing code is never overwritten by default, and `--no-affiliate` does **not** clear one already saved. For a **new user who explicitly accepts the author's code**, use `pikpak auth register --affiliate 342642` to avoid accidentally using another saved code; `pikpak auth register --affiliate=` registers without any code for that attempt. Existing accounts log in instead; no reward is guaranteed.
 
 ## Boundaries
 
